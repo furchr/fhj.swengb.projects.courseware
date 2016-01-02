@@ -1,5 +1,3 @@
-#fhj.swengb.projects.courseware
-
 Courseware Scala App from Fürbahs, Lichtenegger, Nguyen
 
 last modified 2016-01-02 23:06
