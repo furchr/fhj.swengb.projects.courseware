@@ -2,11 +2,9 @@
 
 Courseware Scala App from Fürbahs, Lichtenegger, Nguyen
 
-last modified 2015-12-07 17:34
+last modified 2016-01-02 23:06
 
-#Todo
-
-##Phuong
+#ToDo
 
 - Please have a look at for example https://github.com/tortmann/fhj.swengb.homework.dbtool/blob/master/src/main/scala/fhj/swengb/homework/dbtool/DbTool.scala
  - Thomas Ortmann has the best database "master" database implementation I found until now. 
