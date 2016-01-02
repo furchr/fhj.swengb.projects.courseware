@@ -7,7 +7,9 @@ last modified 2016-01-02 23:06
 #ToDo
 
 - Please have a look at for example https://github.com/tortmann/fhj.swengb.homework.dbtool/blob/master/src/main/scala/fhj/swengb/homework/dbtool/DbTool.scala
- - Thomas Ortmann has the best database "master" database implementation I found until now. 
+ - Thomas Ortmann has the best database "master" database implementation I found until now.
+  - one line in the codefile DbTool.scala from Mr Ortmann defines what database connection we have to use
+  - `lazy val maybeConnection: Try[Connection] = Try(DriverManager.getConnection("jdbc:sqlite::memory:"))`
 - we should use
  - jdbc => https://en.wikipedia.org/wiki/Java_Database_Connectivity
  - sqlite => http://www.sqlite.org
