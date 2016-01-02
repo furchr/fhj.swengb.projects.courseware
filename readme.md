@@ -4,7 +4,9 @@ Courseware Scala App from Fürbahs, Lichtenegger, Nguyen
 
 last modified 2016-01-02 23:06
 
-#ToDo
+#Todo
+
+##Part 1
 
 - Please have a look at for example https://github.com/tortmann/fhj.swengb.homework.dbtool/blob/master/src/main/scala/fhj/swengb/homework/dbtool/DbTool.scala
  - Thomas Ortmann has the best database "master" database implementation I found until now.
@@ -18,3 +20,8 @@ last modified 2016-01-02 23:06
   - Mr Ladstätter chose this "mode" because he wants us to avoid any complex database connections.
   - So there is no database stored on github, our computers or on any server.
   - The database only exists as long as our programm is running on our computer.
+
+##Part 2
+
+- GUI
+- ...
