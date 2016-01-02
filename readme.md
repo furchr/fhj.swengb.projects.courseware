@@ -20,6 +20,7 @@ last modified 2016-01-02 23:06
   - Mr Ladstätter chose this "mode" because he wants us to avoid any complex database connections.
   - So there is no database stored on github, our computers or on any server.
   - The database only exists as long as our programm is running on our computer.
+  - PDF from our DB model https://github.com/furchr/fhj.swengb.projects.courseware/blob/master/2015-12-05_courseware_db.pdf
 
 ##Part 2
 
