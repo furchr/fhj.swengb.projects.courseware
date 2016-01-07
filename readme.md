@@ -2,7 +2,7 @@
 
 from Fürbahs, Lichtenegger, Nguyen
 
-last modified 2016-01-02 23:06
+last modified 2016-01-07 20:23
 
 #Todo
 
@@ -21,6 +21,8 @@ last modified 2016-01-02 23:06
   - So there is no database stored on github, our computers or on any server.
   - The database only exists as long as our programm is running on our computer.
   - PDF from our DB model https://github.com/furchr/fhj.swengb.projects.courseware/blob/master/2015-12-05_courseware_db.pdf
+
+best found implementation of dbtool => https://github.com/deKilla/fhj.swengb.homework.dbtool/tree/dev/src/main/scala/fhj/swengb/homework/dbtool
 
 ##Part 2
 
