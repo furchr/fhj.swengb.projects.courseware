@@ -17,7 +17,6 @@ import javafx.stage.Stage
 import scala.collection.JavaConversions._
 import scala.util.control.NonFatal
 
-
 /**
   * Created by neX on 25.01.2016.
   */
@@ -47,4 +46,16 @@ class CoursewareApp extends javafx.application.Application {
       }
     }
 
+}
+
+class CoursewareAppController extends Initializable {
+
+  //@FXML var displayTextField: TextField = _
+
+  //var reverseDigits: List[Int] = List()
+
+  //var numbers: List[Double] = List()
+
+  override def initialize(location: URL, resources: ResourceBundle): Unit = {
+  }
 }
