@@ -56,6 +56,12 @@ class CoursewareAppController extends Initializable {
 
   //var numbers: List[Double] = List()
 
+  def execInitialLoad {};
+
+  def execApply {};
+
+  def execView {};
+
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
   }
 }
