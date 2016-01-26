@@ -23,7 +23,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
                      <children>
-                        <Button fx:id="InitLoad" layoutX="250.0" layoutY="214.0" mnemonicParsing="false" onAction="#execInitialLoad" prefHeight="100.0" prefWidth="300.0" text="Initial Load">
+                        <Button fx:id="InitLoad" layoutX="250.0" layoutY="214.0" mnemonicParsing="false" onAction="#resetDatabase" prefHeight="100.0" prefWidth="300.0" text="Reset Database">
                            <font>
                               <Font size="36.0" />
                            </font>
@@ -32,7 +32,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Lecturer">
+            <Tab fx:id="lecturerTab" text="Lecturer">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -43,7 +43,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="LecturerInsert" layoutX="300.0" layoutY="440.0" mnemonicParsing="false" onAction="#insertGrade" prefHeight="50.0" prefWidth="200.0" text="Apply">
+                              <Button fx:id="LecturerInsert" layoutX="300.0" layoutY="440.0" mnemonicParsing="false" onAction="#insertGrade" prefHeight="50.0" prefWidth="200.0" text="Insert Grade">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -73,40 +73,43 @@
                   </AnchorPane>
                </content>
             </Tab>
-          <Tab text="Student">
+          <Tab fx:id="studentTab" text="Student">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <ScrollPane>
+                  <AnchorPane minHeight="0.0" minWidth="0.0">
                      <children>
-                        <Label layoutX="20.0" layoutY="40.0" prefHeight="50.0" prefWidth="200.0" text="Student Name:">
+                        <Label layoutX="20.0" layoutY="40.0" prefHeight="50.0" prefWidth="200.0" text="Student:">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Button fx:id="StudentView" layoutX="300.0" layoutY="140.0" mnemonicParsing="false" onAction="#execView" prefHeight="50.0" prefWidth="200.0" text="View">
+                        <Button fx:id="StudentView" layoutX="220.0" layoutY="140.0" mnemonicParsing="false" onAction="#execView" prefHeight="50.0" prefWidth="200.0" text="View">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Button>
-                        <ChoiceBox fx:id="Room112111" layoutX="220.0" layoutY="40.0" prefHeight="50.0" prefWidth="560.0" />
-                        <Label layoutX="20.0" layoutY="240.0" prefHeight="50.0" prefWidth="200.0" text="Name:">
+                        <ChoiceBox fx:id="studentStudentDropdown" layoutX="220.0" layoutY="40.0" prefHeight="50.0" prefWidth="560.0" />
+                        <Label layoutX="20.0" layoutY="240.0" prefHeight="50.0" prefWidth="200.0" text="Student Name:">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <TextArea layoutX="220.0" layoutY="240.0" prefHeight="50.0" prefWidth="560.0" />
+                        <TextArea fx:id="studentName" editable="false" layoutX="220.0" layoutY="240.0" prefHeight="50.0" prefWidth="560.0" />
                         <Label layoutX="20.0" layoutY="340.0" prefHeight="50.0" prefWidth="200.0" text="Student Number:">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <TextArea layoutX="220.0" layoutY="340.0" prefHeight="50.0" prefWidth="560.0" />
-                        <Label layoutX="20.0" layoutY="440.0" prefHeight="50.0" prefWidth="200.0" text="Points:">
+                        <TextArea fx:id="studentNumber" editable="false" layoutX="220.0" layoutY="340.0" prefHeight="50.0" prefWidth="560.0" />
+                        <Label layoutX="20.0" layoutY="440.0" prefHeight="50.0" prefWidth="200.0" text="Grades:">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <TextArea layoutX="220.0" layoutY="440.0" prefHeight="50.0" prefWidth="560.0" />
-                     </children></AnchorPane>
+                           <TextArea fx:id="studentGrades" editable="false" layoutX="220.0" layoutY="440.0" prefHeight="80.0" prefWidth="560.0" />
+                     </children>
+                  </AnchorPane>
+                </ScrollPane>
             </content>
           </Tab>
         </tabs>

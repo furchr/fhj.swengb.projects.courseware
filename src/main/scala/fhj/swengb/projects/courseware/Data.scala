@@ -23,4 +23,8 @@ object Data {
     Student(4, "0072432552349", "Gruber", "Lukas", "IMA14")
   )
 
+  val gradeList : List[Grade] = List(
+
+  )
+
 }
