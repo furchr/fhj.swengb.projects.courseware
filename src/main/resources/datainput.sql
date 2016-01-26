@@ -5,11 +5,11 @@ studentClassID INT PRIMARY KEY NOT NULL,
 studentClassName VARCHAR(10)
 );
 
-INSERT INTO `StudentClass` VALUES (1,'IMA15');
-INSERT INTO `StudentClass` VALUES (2,'IMA14');
-INSERT INTO `StudentClass` VALUES (3,'IMA13');
-INSERT INTO `StudentClass` VALUES (4,'AIM15');
-INSERT INTO `StudentClass` VALUES (5,'AIM14');
+INSERT INTO `StudentClass` VALUES (1,"IMA15");
+INSERT INTO `StudentClass` VALUES (2,"IMA14");
+INSERT INTO `StudentClass` VALUES (3,"IMA13");
+INSERT INTO `StudentClass` VALUES (4,"AIM15");
+INSERT INTO `StudentClass` VALUES (5,"AIM14");
 
 CREATE TABLE Student(
 studentID INT PRIMARY KEY NOT NULL,
@@ -20,47 +20,47 @@ studentClassID INT,
 FOREIGN KEY(studentClassID) REFERENCES StudentClass(studentClassID)
 );
 
-INSERT INTO `Student` VALUES (1,'857699','Blazevic','Josip',2);
-INSERT INTO `Student` VALUES (2,'478389','Fuchs','Michael',2);
-INSERT INTO `Student` VALUES (3,'367426','Fuerbahs','Christoph',2);
-INSERT INTO `Student` VALUES (4,'706388','Graf','Felix',2);
-INSERT INTO `Student` VALUES (5,'375902','Hasenbichler','Timo',2);
-INSERT INTO `Student` VALUES (6,'734524','Herzog','Carina',2);
-INSERT INTO `Student` VALUES (7,'664334','Karimova','Elza',2)
-INSERT INTO `Student` VALUES (8,'218989','Körner','Paul',2);
-INSERT INTO `Student` VALUES (9,'330792','Lichtenegger','Alexander',2);
-INSERT INTO `Student` VALUES (10,'181297','Schneider','Andreas',2);
-INSERT INTO `Student` VALUES (11,'521358','Bajric','Amar',2);
-INSERT INTO `Student` VALUES (12,'186252','Hoxha','Granit',2)
-INSERT INTO `Student` VALUES (13,'737040','Hysi','Steven',2);
-INSERT INTO `Student` VALUES (14,'311682','Kandlhofer','Daniel',2);
-INSERT INTO `Student` VALUES (15,'918563','Knaller','Markus',2);
-INSERT INTO `Student` VALUES (16,'380226','Lagger','Christian',2);
-INSERT INTO `Student` VALUES (17,'301830','Leiter','Stefan',2);
-INSERT INTO `Student` VALUES (18,'882795','Meizenitsch','Georg',2);
-INSERT INTO `Student` VALUES (19,'972959','Skerbinz','Verena',2);
-INSERT INTO `Student` VALUES (20,'883927','Steinkellner','Wolfgang',2);
-INSERT INTO `Student` VALUES (21,'396777','Dirnbauer','Christoph',2);
-INSERT INTO `Student` VALUES (22,'545960','Folk','Daniel',2);
-INSERT INTO `Student` VALUES (23,'590872','Ortmann','Thomas',2);
-INSERT INTO `Student` VALUES (24,'802045','Seebacher','Andreas',2);
-INSERT INTO `Student` VALUES (25,'933923','Spalek','Nina',2);
-INSERT INTO `Student` VALUES (26,'684708','Wageneder','Maximilian',2);
-INSERT INTO `Student` VALUES (27,'580201','Yiliz','Marcel',2);
-INSERT INTO `Student` VALUES (28,'514202','Zefferer','Lukas',2);
-INSERT INTO `Student` VALUES (29,'488891','Zsifkovits','Markus',2);
-INSERT INTO `Student` VALUES (30,'524329','Nguyen','Phuong',2);
-INSERT INTO `Student` VALUES (31,'232535','Vidal','Hector',2);
+Student(1,"857699","Blazevic","Josip","IMA14")
+Student(2,"478389","Fuchs","Michael","IMA14")
+Student(3,"367426","Fuerbahs","Christoph","IMA14")
+Student(4,"706388","Graf","Felix","IMA14")
+Student(5,"375902","Hasenbichler","Timo","IMA14")
+Student(6,"734524","Herzog","Carina","IMA14")
+Student(7,"664334","Karimova","Elza",2)
+Student(8,"218989","Körner","Paul","IMA14")
+Student(9,"330792","Lichtenegger","Alexander","IMA14")
+Student(10,"181297","Schneider","Andreas","IMA14")
+Student(11,"521358","Bajric","Amar","IMA14")
+Student(12,"186252","Hoxha","Granit",2)
+Student(13,"737040","Hysi","Steven","IMA14")
+Student(14,"311682","Kandlhofer","Daniel","IMA14")
+Student(15,"918563","Knaller","Markus","IMA14")
+Student(16,"380226","Lagger","Christian","IMA14")
+Student(17,"301830","Leiter","Stefan","IMA14")
+Student(18,"882795","Meizenitsch","Georg","IMA14")
+Student(19,"972959","Skerbinz","Verena","IMA14")
+Student(20,"883927","Steinkellner","Wolfgang","IMA14")
+Student(21,"396777","Dirnbauer","Christoph","IMA14")
+Student(22,"545960","Folk","Daniel","IMA14")
+Student(23,"590872","Ortmann","Thomas","IMA14")
+Student(24,"802045","Seebacher","Andreas","IMA14")
+Student(25,"933923","Spalek","Nina","IMA14")
+Student(26,"684708","Wageneder","Maximilian","IMA14")
+Student(27,"580201","Yiliz","Marcel","IMA14")
+Student(28,"514202","Zefferer","Lukas","IMA14")
+Student(29,"488891","Zsifkovits","Markus","IMA14")
+Student(30,"524329","Nguyen","Phuong","IMA14")
+Student(31,"232535","Vidal","Hector","IMA14")
 
 CREATE TABLE Lecturetype(
 lecturetypeID INT PRIMARY KEY NOT NULL,
 lecturetypedescription VARCHAR(50)
 );
 
-INSERT INTO `Lecturetype` VALUES (1,'Lecture');
-INSERT INTO `Lecturetype` VALUES (2,'Exercise');
-INSERT INTO `Lecturetype` VALUES (3,'Theory Exam');
-INSERT INTO `Lecturetype` VALUES (4,'Project');
+INSERT INTO `Lecturetype` VALUES (1,"Lecture");
+INSERT INTO `Lecturetype` VALUES (2,"Exercise");
+INSERT INTO `Lecturetype` VALUES (3,"Theory Exam");
+INSERT INTO `Lecturetype` VALUES (4,"Project");
 
 CREATE TABLE Lecturer(
 lecturerID INT PRIMARY KEY NOT NULL,
@@ -69,8 +69,8 @@ lecturerFirstname VARCHAR(50),
 lectureCourse VARCHAR(50)
 );
 
-INSERT INTO `Lecturer` VALUES (1,'Ladstaetter','Robert','SWENGB Exercise');
-INSERT INTO `Lecturer` VALUES (2,'Blauensteiner','Johann','SWENGB Theory');
+INSERT INTO `Lecturer` VALUES (1,"Ladstaetter","Robert","SWENGB Exercise");
+INSERT INTO `Lecturer` VALUES (2,"Blauensteiner","Johann","SWENGB Theory");
 
 CREATE TABLE LectureAppointment(
 lectureAppointmentID INT PRIMARY KEY NOT NULL,
@@ -103,10 +103,10 @@ lecturetypeID INT,
 FOREIGN KEY(lecturetypeID) REFERENCES Lecturetype(lecturetypeID)
 );
 
-INSERT INTO `Lecture` VALUES (1,'Winter1516',1);
-INSERT INTO `Lecture` VALUES (2,'Winter1516',2);
-INSERT INTO `Lecture` VALUES (3,'Winter1516',3);
-INSERT INTO `Lecture` VALUES (4,'Winter1516',4);
+INSERT INTO `Lecture` VALUES (1,"Winter1516",1);
+INSERT INTO `Lecture` VALUES (2,"Winter1516",2);
+INSERT INTO `Lecture` VALUES (3,"Winter1516",3);
+INSERT INTO `Lecture` VALUES (4,"Winter1516",4);
 
 CREATE TABLE Grade(
 gradeID INT PRIMARY KEY NOT NULL,
@@ -136,8 +136,8 @@ assessmentMaxPoints FLOAT,
 assessmentMinPointsForSufficiency FLOAT
 );
 
-INSERT INTO `Assessment` VALUES (1,'Theory Exam',1,100.0,60.0);
-INSERT INTO `Assessment` VALUES (2,'Project',2,40.0,25.0);
-INSERT INTO `Assessment` VALUES (3,'Practical Exam',1,100.0,25.0);
+INSERT INTO `Assessment` VALUES (1,"Theory Exam",1,100.0,60.0);
+INSERT INTO `Assessment` VALUES (2,"Project",2,40.0,25.0);
+INSERT INTO `Assessment` VALUES (3,"Practical Exam",1,100.0,25.0);
 
 COMMIT;
