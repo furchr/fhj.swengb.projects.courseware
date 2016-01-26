@@ -43,14 +43,14 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="LecturerApply" layoutX="300.0" layoutY="440.0" mnemonicParsing="false" onAction="#execApply" prefHeight="50.0" prefWidth="200.0" text="Apply">
+                              <Button fx:id="LecturerInsert" layoutX="300.0" layoutY="440.0" mnemonicParsing="false" onAction="#insertGrade" prefHeight="50.0" prefWidth="200.0" text="Apply">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Button>
-                              <ChoiceBox fx:id="Room11211" layoutX="220.0" layoutY="40.0" prefHeight="50.0" prefWidth="560.0" />
-                              <ChoiceBox fx:id="Room11311" layoutX="220.0" layoutY="240.0" prefHeight="50.0" prefWidth="560.0" />
-                              <Label layoutX="20.0" layoutY="140.0" prefHeight="50.0" prefWidth="200.0" text="Type:">
+                              <ChoiceBox fx:id="lecturerLecturernameDropdown" layoutX="220.0" layoutY="40.0" prefHeight="50.0" prefWidth="560.0" />
+                              <ChoiceBox fx:id="lecturerStudentDropdown" layoutX="220.0" layoutY="240.0" prefHeight="50.0" prefWidth="560.0" />
+                              <Label layoutX="20.0" layoutY="140.0" prefHeight="50.0" prefWidth="200.0" text="Assessment">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
@@ -65,8 +65,8 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <TextArea layoutX="220.0" layoutY="340.0" prefHeight="50.0" prefWidth="100.0" />
-                              <ChoiceBox fx:id="Room11112" layoutX="220.0" layoutY="140.0" prefHeight="50.0" prefWidth="560.0" />
+                              <TextArea fx:id="lecturerPoints" layoutX="220.0" layoutY="340.0" prefHeight="50.0" prefWidth="100.0" />
+                              <ChoiceBox fx:id="lecturerAssessmentDropdown" layoutX="220.0" layoutY="140.0" prefHeight="50.0" prefWidth="560.0" />
                            </children>
                         </AnchorPane>
                      </children>
