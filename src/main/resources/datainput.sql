@@ -51,6 +51,11 @@ Student(28,"514202","Zefferer","Lukas","IMA14")
 Student(29,"488891","Zsifkovits","Markus","IMA14")
 Student(30,"524329","Nguyen","Phuong","IMA14")
 Student(31,"232535","Vidal","Hector","IMA14")
+Student(99,"123456","ASDF","WSAD","IMA99")
+Student(99,"123456","ASDF","WSAD","IMA99")
+Student(99,"123456","ASDF","WSAD","IMA99")
+Student(99,"123456","ASDF","WSAD","IMA99")
+Student(99,"123456","ASDF","WSAD","IMA99")
 
 CREATE TABLE Lecturetype(
 lecturetypeID INT PRIMARY KEY NOT NULL,
