@@ -1,30 +1,51 @@
 #Courseware Scala App
 
-from Fürbahs, Lichtenegger, Nguyen
+![<fhLogo>](<https://www.fh-joanneum.at/custom/images/logo_1001.png>)
 
-last modified 2016-01-07 20:23
+![<fhIma>](<http://www.fh-joanneum.at/global/show_picture.asp?id=aaaaaaaaaajahgt>)
 
-#Todo
+by [Christoph Fürbahs](http://www.fuerbahs.com), Alexander Lichtenegger, Phuong Nguyen
 
-##Part 1
+#General Information
+Courseware is a Management System for our Software Engineering Basics Course with Mr Robert Ladstätter.
+The app is developed in Scala with a SQLite database.
+The main goals are:
+- Managing the data of
+	- students
+	- lecturers
+	- grades
+	- assignments
 
-- Please have a look at for example https://github.com/tortmann/fhj.swengb.homework.dbtool/blob/master/src/main/scala/fhj/swengb/homework/dbtool/DbTool.scala
- - Thomas Ortmann has the best database "master" database implementation I found until now.
-  - one line in the codefile DbTool.scala from Mr Ortmann defines what database connection we have to use
-  - `lazy val maybeConnection: Try[Connection] = Try(DriverManager.getConnection("jdbc:sqlite::memory:"))`
-- we should use
- - jdbc => https://en.wikipedia.org/wiki/Java_Database_Connectivity
- - sqlite => http://www.sqlite.org
-  - memory (as far is i remember) is a database mode of sqlite.
-  - there the database is created on the fly only in the RAM of your computer.
-  - Mr Ladstätter chose this "mode" because he wants us to avoid any complex database connections.
-  - So there is no database stored on github, our computers or on any server.
-  - The database only exists as long as our programm is running on our computer.
-  - PDF from our DB model https://github.com/furchr/fhj.swengb.projects.courseware/blob/master/2015-12-05_courseware_db.pdf
+#Application
 
-best found implementation of dbtool => https://github.com/deKilla/fhj.swengb.homework.dbtool/tree/dev/src/main/scala/fhj/swengb/homework/dbtool
+The Application starts with loading the sqlite database.
+Then you can switch between different tabs in the upper area of the app.
 
-##Part 2
+##Lecuturer Tab
 
-- GUI
-- ...
+Here you can enter the
+
+    - Lecturer Name
+    - Assessment
+    - Student
+    - Points for an Exam
+
+By clicking "Insert Grade" you can save the information in the database.
+
+#Student Tab
+
+Here you can enter the
+
+    - Student
+    - Student Name
+    - Student Number
+    - Grades
+
+By clicking on view you can view all grades from one specified student.
+By clicking on the "Save as HTML" you can export the grades of the selected student in an HTML file in the project root folder.
+
+[FH Joanneum IMA](http://www.fh-joanneum.at/ima/?lan=en)
+
+last modified 2016-01-27
+
+########################
