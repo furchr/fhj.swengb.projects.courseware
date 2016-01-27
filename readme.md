@@ -53,4 +53,8 @@ By clicking on the "Save as HTML" you can export the grades of the selected stud
 
 ![<Screenshot Student Tab>](<./screenshots/9.png>)
 
+#Data Model
+
+![<Screenshot Data Model>](<./screenshots/10.png>)
+
 last modified 2016-01-27 23:16
