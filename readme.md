@@ -9,12 +9,15 @@ by [Christoph Fürbahs](http://www.fuerbahs.com), Alexander Lichtenegger, Phuong
 #General Information
 Courseware is a Management System for our Software Engineering Basics Course with Mr Robert Ladstätter.
 The app is developed in Scala with a SQLite database.
+The visual appearance is achieved by the use of a CSS-file.
+
 The main goals are:
-- Managing the data of
-	- students
-	- lecturers
-	- grades
-	- assignments
+
+    - Managing the data of
+    	- students
+    	- lecturers
+    	- grades
+    	- assignments
 
 #Application
 
@@ -34,7 +37,7 @@ Here you can enter the
 
 By clicking "Insert Grade" you can save the information in the database.
 
-![<Screenshot Lecturer Tab>](<https://www.fh-joanneum.at/custom/images/logo_1001.png>)
+![<Screenshot Lecturer Tab>](<./screenshots/6.png>)
 
 #Student Tab
 
@@ -48,8 +51,6 @@ Here you can enter the
 By clicking on view you can view all grades from one specified student.
 By clicking on the "Save as HTML" you can export the grades of the selected student in an HTML file in the project root folder.
 
-![<Screenshot Student Tab>](<https://www.fh-joanneum.at/custom/images/logo_1001.png>)
+![<Screenshot Student Tab>](<./screenshots/9.png>)
 
-[FH Joanneum IMA](http://www.fh-joanneum.at/ima/?lan=en)
-
-last modified 2016-01-27
+last modified 2016-01-27 23:16
