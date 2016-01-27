@@ -2,6 +2,8 @@ package fhj.swengb.projects.courseware
 
 import java.io.File
 import java.net.URL
+import java.nio.charset.StandardCharsets
+import java.nio.file.{Files, Paths}
 import java.sql.{Timestamp, Connection, DriverManager}
 import java.util.{Date, ResourceBundle}
 import javafx.application.Application
@@ -13,10 +15,12 @@ import javafx.scene.control.TreeItem.TreeModificationEvent
 import javafx.scene.control._
 import javafx.scene.input.{MouseButton, MouseEvent}
 import javafx.scene.layout.{AnchorPane, BorderPane}
+import javafx.scene.web.WebView
 import javafx.scene.{Parent, Scene}
 import javafx.stage.Stage
 
 import scala.collection.JavaConversions._
+import scala.io.Source
 import scala.util.Try
 import scala.util.control.NonFatal
 
@@ -53,7 +57,7 @@ class CoursewareAppController extends Initializable {
   @FXML var lecturerStudentDropdown : ChoiceBox[Student] = _
   @FXML var lecturerPoints : TextArea = _
   @FXML var studentStudentDropdown : ChoiceBox[Student] = _
-  @FXML var studentGrades : TextArea = _
+  @FXML var studentGrades : WebView = _
   @FXML var studentName : TextArea = _
   @FXML var studentNumber : TextArea = _
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
@@ -67,7 +71,7 @@ class CoursewareAppController extends Initializable {
       Lecturer.toDb(Db.maybeConnection.get)(lecturer)
     }
     lecturerLecturernameDropdown.getItems.clear()
-    lecturerLecturernameDropdown.getItems.addAll(Data.lecturerList)
+    lecturerLecturernameDropdown.getItems.addAll(Lecturer.fromDb(Lecturer.queryAll(Db.maybeConnection.get)))
 
     // --------- initialize Assessments
     Assessment.reTable(Db.maybeConnection.get.createStatement())
@@ -75,7 +79,7 @@ class CoursewareAppController extends Initializable {
       Assessment.toDb(Db.maybeConnection.get)(assessment)
     }
     lecturerAssessmentDropdown.getItems.clear()
-    lecturerAssessmentDropdown.getItems.addAll(Data.assessmentList)
+    lecturerAssessmentDropdown.getItems.addAll(Assessment.fromDb(Assessment.queryAll(Db.maybeConnection.get)))
 
     // --------- initialize Students
     Student.reTable(Db.maybeConnection.get.createStatement())
@@ -83,7 +87,7 @@ class CoursewareAppController extends Initializable {
       Student.toDb(Db.maybeConnection.get)(student)
     }
     lecturerStudentDropdown.getItems.clear()
-    lecturerStudentDropdown.getItems.addAll(Data.studentList)
+    lecturerStudentDropdown.getItems.addAll(Student.fromDb(Student.queryAll(Db.maybeConnection.get)))
 
     // --------- initialize Grades
     Grade.reTable(Db.maybeConnection.get.createStatement())
@@ -96,7 +100,7 @@ class CoursewareAppController extends Initializable {
     studentStudentDropdown.getItems.addAll(Data.studentList)
     studentName.setText("")
     studentNumber.setText("")
-    studentGrades.setText("")
+    studentGrades.getEngine.loadContent("")
   }
 
   def insertGrade(): Unit = {
@@ -105,6 +109,7 @@ class CoursewareAppController extends Initializable {
       val currentAssessment = lecturerAssessmentDropdown.getValue
       val currentStudent = lecturerStudentDropdown.getValue
       val currentPoints = lecturerPoints.getText.toFloat // throws java.lang.NumberFormatException if text is entered or is empty
+      if (currentPoints < 0 | currentPoints > currentAssessment.assessmentMaxPoints) throw new java.lang.NumberFormatException()
       if (currentLecturer == null | currentAssessment == null | currentStudent == null) {
         throw new IllegalArgumentException()
       }
@@ -119,7 +124,7 @@ class CoursewareAppController extends Initializable {
       alert.showAndWait()
     } catch {
       // see http://code.makery.ch/blog/javafx-dialogs-official/
-      case e:java.lang.NumberFormatException => {
+      case e:java.lang.NumberFormatException => { // error with lecturerPoints.getText.toFloat or points are not between 0 and maxPoints
         val alert = new Alert(AlertType.ERROR)
         alert.setTitle("Points error")
         alert.setHeaderText("Points error")
@@ -145,30 +150,11 @@ class CoursewareAppController extends Initializable {
     try {
       val currentStudent = studentStudentDropdown.getValue
       if (currentStudent == null) throw new IllegalArgumentException()
-      val selectQuery = "select * from grade where studentID=" + currentStudent.studentID
-      val selectedGrades = Grade.fromDb(Db.maybeConnection.get.createStatement().executeQuery(selectQuery))
-      if (selectedGrades.isEmpty) {
-        val alert = new Alert(AlertType.INFORMATION)
-        alert.setTitle("No grades")
-        alert.setHeaderText(null)
-        alert.setContentText("There are currently no grades for the selected student.")
-        alert.showAndWait()
-      }
       studentName.setText(currentStudent.studentLastname + " " + currentStudent.studentFirstname)
       studentNumber.setText(currentStudent.studentMatnum)
-      studentGrades.clear()
-      for (grade <- selectedGrades) {
-        val selectAssessmentQuery = "select * from assessment where assessmentID=" + grade.assessmentID
-        val selectLecturerQuery = "select * from lecturer where lecturerID=" + grade.lecturerID
-        val assessment = Assessment.fromDb(Db.maybeConnection.get.createStatement().executeQuery(selectAssessmentQuery)).head
-        val assessmentName = assessment.assessmentName
-        val maxPoints = assessment.assessmentMaxPoints
-        val minPointsForSufficient = assessment.assessmentMinPointsForSufficient
-        val lecturer = Lecturer.fromDb(Db.maybeConnection.get.createStatement().executeQuery(selectLecturerQuery)).head
-        val lecturerName = lecturer.lecturerLastname + " " + lecturer.lecturerFirstname
-        val failedOrPassed = if (grade.gradePoints >= minPointsForSufficient) "-> passed" else "-> failed"
-        studentGrades.appendText(s"$assessmentName ($lecturerName): ${grade.gradePoints}/$maxPoints $failedOrPassed (minimum $minPointsForSufficient)\n")
-      }
+      studentGrades.getEngine.loadContent("")
+      val htmlReport = createReportHtmlString(currentStudent)
+      studentGrades.getEngine.loadContent(htmlReport)
 
 
     } catch {
@@ -181,6 +167,86 @@ class CoursewareAppController extends Initializable {
       }
       case e => e.printStackTrace()
     }
+  }
+
+  def saveReport() : Unit = {
+    try {
+      val currentStudent = studentStudentDropdown.getValue
+      if (currentStudent == null) throw new IllegalArgumentException()
+      val html = createReportHtmlString(currentStudent)
+      val filePath = Paths.get(s"report_${currentStudent.studentLastname}_${currentStudent.studentFirstname}.html")
+      Files.write(filePath, html.getBytes(StandardCharsets.UTF_8))
+
+      val alert = new Alert(AlertType.INFORMATION)
+      alert.setTitle("Report save")
+      alert.setHeaderText(null)
+      alert.setContentText(s"The report was saved to ${filePath.toAbsolutePath}")
+      alert.showAndWait()
+
+    } catch {
+      case e:IllegalArgumentException => {
+        val alert = new Alert(AlertType.ERROR)
+        alert.setTitle("Student error")
+        alert.setHeaderText("Student error")
+        alert.setContentText("Please select a student!")
+        alert.showAndWait()
+      }
+      case e => {
+        val alert = new Alert(AlertType.ERROR)
+        alert.setTitle("File error")
+        alert.setHeaderText("File error")
+        alert.setContentText("Error writing report to html file!")
+        alert.showAndWait()
+      }
+    }
+  }
+
+
+  def createReportHtmlString(student: Student) : String = {
+    val htmlStart = "<!DOCTYPE html><html>"
+    val htmlStyle = "<head><style>" + Source.fromURL(getClass.getResource("/fhj/swengb/projects/courseware/bootstrap.min.css")).mkString + "</style></head>"
+    val htmlBodyStart = "<body>"
+    val htmlHeadings = s"<h1>Grade report</h1><h2>${student.studentLastname} ${student.studentFirstname}</h2>"
+    val htmlStudentInfo = s"<ul> <li>Last Name: ${student.studentLastname}</li> <li>First Name: ${student.studentFirstname} </li> <li>Matriculation Number: ${student.studentMatnum}</li> <li>Study programme: ${student.studentStudyprogramme}</li> </ul>"
+    val htmlTableStart = "<table class=\"table table-hover table-striped\">"
+    val htmlTableHead = "<thead><tr> <th>Assessment</th> <th>Points</th> <th>Max Points</th> <th>Passed or Failed</th> <th>Date</th> </tr></thead>"
+    val htmlTableBodyStart = "<tbody>"
+    var htmlTableRows = new StringBuilder
+
+
+    val selectGradesQuery = "select * from grade where studentID=" + student.studentID
+    val selectedGrades = Grade.fromDb(Db.maybeConnection.get.createStatement().executeQuery(selectGradesQuery))
+    if (selectedGrades.isEmpty) {
+      val alert = new Alert(AlertType.INFORMATION)
+      alert.setTitle("No grades")
+      alert.setHeaderText(null)
+      alert.setContentText("There are currently no grades for the selected student.")
+      alert.showAndWait()
+    }
+
+    for (grade <- selectedGrades) {
+      val selectAssessmentQuery = "select * from assessment where assessmentID=" + grade.assessmentID
+      val selectLecturerQuery = "select * from lecturer where lecturerID=" + grade.lecturerID
+      val assessment = Assessment.fromDb(Db.maybeConnection.get.createStatement().executeQuery(selectAssessmentQuery)).head
+      val assessmentName = assessment.assessmentName
+      val maxPoints = assessment.assessmentMaxPoints
+      val minPointsForSufficient = assessment.assessmentMinPointsForSufficient
+      val lecturer = Lecturer.fromDb(Db.maybeConnection.get.createStatement().executeQuery(selectLecturerQuery)).head
+      val lecturerName = lecturer.lecturerLastname + " " + lecturer.lecturerFirstname
+      val passedOrFailed = if (grade.gradePoints >= minPointsForSufficient) "-> passed" else "-> failed"
+      //studentGrades.appendText(s"$assessmentName ($lecturerName): ${grade.gradePoints}/$maxPoints $failedOrPassed (minimum $minPointsForSufficient)\n")
+      htmlTableRows.append(s"<tr> <td>$assessmentName ($lecturerName)</td> <td>${grade.gradePoints}</td> <td>$maxPoints</td> <td>$passedOrFailed</td> <td>${grade.gradeDate}</td></tr>")
+
+    }
+
+
+
+
+    val htmlTableBodyEnd = "</tbody>"
+    val htmlTableEnd = "</table>"
+    val htmlBodyEnd = "</body>"
+    val htmlEnd = "</html>"
+    return htmlStart+htmlStyle+htmlBodyStart+htmlHeadings+htmlStudentInfo+htmlTableStart+htmlTableHead+htmlTableBodyStart+htmlTableRows+htmlTableBodyEnd+htmlTableEnd+htmlBodyEnd+htmlEnd
   }
 
 }
