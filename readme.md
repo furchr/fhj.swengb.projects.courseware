@@ -9,7 +9,7 @@ by [Christoph Fürbahs](http://www.fuerbahs.com), Alexander Lichtenegger, Phuong
 #General Information
 Courseware is a Management System for our Software Engineering Basics Course with Mr Robert Ladstätter.
 The app is developed in Scala with a SQLite database.
-The visual appearance is achieved by the use of a CSS-file.
+The visual appearance is taken care of by the usage of CSS.
 
 The main goals are:
 
