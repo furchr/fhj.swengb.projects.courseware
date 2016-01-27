@@ -1,6 +1,5 @@
 package fhj.swengb.projects.courseware
 
-
 object Data {
 
   val lecturerList : List[Lecturer] = List(
@@ -52,8 +51,5 @@ object Data {
     Student(31,"232535","Vidal","Hector","IMA14")
   )
 
-  val gradeList : List[Grade] = List(
-
-  )
-
+  val gradeList : List[Grade] = List()
 }

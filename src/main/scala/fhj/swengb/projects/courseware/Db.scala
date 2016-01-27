@@ -66,12 +66,10 @@ object Db {
       * sql code for inserting an entity.
       */
     def insertSql: String
-
   }
 
   //connection to the sqlite db
   //once generated as long as the gui is running
   lazy val maybeConnection: Try[Connection] =
     Try(DriverManager.getConnection("jdbc:sqlite::memory:"))
-
 }

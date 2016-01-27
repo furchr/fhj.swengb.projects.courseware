@@ -21,11 +21,11 @@
    <center>
       <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab text="Reset Database">
+          <Tab fx:id="resetTab" text="Reset Database">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
                      <children>
-                        <Button fx:id="InitLoad" layoutX="250.0" layoutY="214.0" mnemonicParsing="false" onAction="#resetDatabase" prefHeight="100.0" prefWidth="300.0" text="Reset Database">
+                        <Button fx:id="ResetDatabase" layoutX="250.0" layoutY="214.0" mnemonicParsing="false" onAction="#resetDatabase" prefHeight="100.0" prefWidth="300.0" text="Reset Database">
                            <font>
                               <Font size="36.0" />
                            </font>
@@ -45,14 +45,14 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="LecturerInsert" layoutX="300.0" layoutY="440.0" mnemonicParsing="false" onAction="#insertGrade" prefHeight="50.0" prefWidth="200.0" text="Insert Grade">
+                              <Button fx:id="InsertGrade" layoutX="300.0" layoutY="440.0" mnemonicParsing="false" onAction="#insertGrade" prefHeight="50.0" prefWidth="200.0" text="Insert Grade">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font size="24.0" />
                                  </font>
                               </Button>
                               <ChoiceBox fx:id="lecturerLecturernameDropdown" layoutX="220.0" layoutY="40.0" prefHeight="50.0" prefWidth="560.0" />
                               <ChoiceBox fx:id="lecturerStudentDropdown" layoutX="220.0" layoutY="240.0" prefHeight="50.0" prefWidth="560.0" />
-                              <Label layoutX="20.0" layoutY="140.0" prefHeight="50.0" prefWidth="200.0" text="Assessment">
+                              <Label layoutX="20.0" layoutY="140.0" prefHeight="50.0" prefWidth="200.0" text="Assessment:">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
@@ -67,7 +67,10 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <TextArea fx:id="lecturerPoints" layoutX="220.0" layoutY="340.0" prefHeight="50.0" prefWidth="100.0" />
+                              <TextArea fx:id="lecturerPoints" layoutX="220.0" layoutY="328.0" prefHeight="50.0" prefWidth="100.0">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font></TextArea>
                               <ChoiceBox fx:id="lecturerAssessmentDropdown" layoutX="220.0" layoutY="140.0" prefHeight="50.0" prefWidth="560.0" />
                            </children>
                         </AnchorPane>
@@ -78,16 +81,16 @@
           <Tab fx:id="studentTab" text="Student">
             <content>
                 <ScrollPane>
-                  <AnchorPane maxHeight="1.7976931348623157E308" minHeight="0.0" minWidth="0.0">
+                  <AnchorPane maxHeight="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="528.0" prefWidth="800.0">
                      <children>
                         <Label layoutX="20.0" layoutY="40.0" prefHeight="50.0" prefWidth="200.0" text="Student:">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Button fx:id="StudentView" layoutX="220.0" layoutY="140.0" mnemonicParsing="false" onAction="#execView" prefHeight="50.0" prefWidth="200.0" text="View">
+                        <Button fx:id="ViewStudent" layoutX="220.0" layoutY="140.0" mnemonicParsing="false" onAction="#viewStudent" prefHeight="50.0" prefWidth="200.0" text="View">
                            <font>
-                              <Font size="18.0" />
+                              <Font size="24.0" />
                            </font>
                         </Button>
                         <ChoiceBox fx:id="studentStudentDropdown" layoutX="220.0" layoutY="40.0" prefHeight="50.0" prefWidth="560.0" />
@@ -96,22 +99,28 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="studentName" editable="false" layoutX="220.0" layoutY="240.0" prefHeight="50.0" prefWidth="560.0" />
+                        <TextArea fx:id="studentName" editable="false" layoutX="220.0" layoutY="229.0" prefHeight="50.0" prefWidth="560.0">
+                              <font>
+                                 <Font size="24.0" />
+                              </font></TextArea>
                         <Label layoutX="20.0" layoutY="340.0" prefHeight="50.0" prefWidth="200.0" text="Student Number:">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="studentNumber" editable="false" layoutX="220.0" layoutY="340.0" prefHeight="50.0" prefWidth="560.0" />
+                        <TextArea fx:id="studentNumber" editable="false" layoutX="220.0" layoutY="328.0" prefHeight="50.0" prefWidth="560.0">
+                              <font>
+                                 <Font size="24.0" />
+                              </font></TextArea>
                         <Label layoutX="20.0" layoutY="440.0" prefHeight="50.0" prefWidth="200.0" text="Grades:">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                           <WebView fx:id="studentGrades" layoutX="220.0" layoutY="440.0" minHeight="-1.0" prefHeight="80.0" prefWidth="560.0" />
-                           <Button fx:id="studentSaveButton" layoutX="20.0" layoutY="478.0" mnemonicParsing="false" onAction="#saveReport" text="Save report as HTML">
+                           <WebView fx:id="studentGrades" layoutX="220.0" layoutY="429.0" minHeight="-1.0" prefHeight="72.0" prefWidth="560.0" />
+                           <Button fx:id="SaveHTML" layoutX="580.0" layoutY="140.0" mnemonicParsing="false" onAction="#saveHTML" prefHeight="50.0" prefWidth="200.0" text="Save as HTML">
                               <font>
-                                 <Font size="18.0" />
+                                 <Font size="24.0" />
                               </font>
                            </Button>
                      </children>

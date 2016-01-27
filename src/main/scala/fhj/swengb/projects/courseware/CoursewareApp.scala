@@ -24,7 +24,6 @@ import scala.io.Source
 import scala.util.Try
 import scala.util.control.NonFatal
 
-
 object CoursewareApp {
   def main (args: Array[String]) {
     Application.launch(classOf[CoursewareApp], args: _*)
@@ -32,7 +31,6 @@ object CoursewareApp {
 }
 
 //starts the gui
-
 class CoursewareApp extends javafx.application.Application {
   val Fxml = "/fhj/swengb/projects/courseware/Courseware.fxml"
   val Css = "/fhj/swengb/projects/courseware/Courseware.css"
@@ -44,17 +42,14 @@ class CoursewareApp extends javafx.application.Application {
     stage.setScene(scene)
     stage.getScene.getStylesheets.add(Css)
     stage.show()
-
   } catch {
     case NonFatal(e) => {
       e.printStackTrace()
     }
   }
-
 }
 
 //access to fxml gui elements with fxID
-
 class CoursewareAppController extends Initializable {
   @FXML var lecturerLecturernameDropdown : ChoiceBox[Lecturer] = _
   @FXML var lecturerAssessmentDropdown : ChoiceBox[Assessment] = _
@@ -71,7 +66,6 @@ class CoursewareAppController extends Initializable {
   }
 
   //access to database
-
   def resetDatabase(): Unit = {
     // --------- initialize Lecturers
     //recreate => drops and creates the table if table already exists
@@ -163,7 +157,7 @@ class CoursewareAppController extends Initializable {
     }
   }
 
-  def execView(): Unit = {
+  def viewStudent(): Unit = {
     try {
       val currentStudent = studentStudentDropdown.getValue
       //when no student is selected
@@ -176,7 +170,6 @@ class CoursewareAppController extends Initializable {
       //load the html report for the actual student
       val htmlReport = createReportHtmlString(currentStudent)
       studentGrades.getEngine.loadContent(htmlReport)
-
     } catch {
       case e:IllegalArgumentException => {
         val alert = new Alert(AlertType.ERROR)
@@ -189,7 +182,7 @@ class CoursewareAppController extends Initializable {
     }
   }
 
-  def saveReport() : Unit = {
+  def saveHTML() : Unit = {
     try {
       val currentStudent = studentStudentDropdown.getValue
       if (currentStudent == null) throw new IllegalArgumentException()
@@ -203,7 +196,6 @@ class CoursewareAppController extends Initializable {
       alert.setHeaderText(null)
       alert.setContentText(s"The report was saved to ${filePath.toAbsolutePath}")
       alert.showAndWait()
-
     } catch {
       case e:IllegalArgumentException => {
         val alert = new Alert(AlertType.ERROR)
@@ -223,7 +215,6 @@ class CoursewareAppController extends Initializable {
   }
 
   //creates the html file
-
   def createReportHtmlString(student: Student) : String = {
     val htmlStart = "<!DOCTYPE html><html>"
     //writes everything from bootstrap.min.css into the html file
@@ -257,7 +248,6 @@ class CoursewareAppController extends Initializable {
       val passedOrFailed = if (grade.gradePoints >= minPointsForSufficient) "-> passed" else "-> failed"
       //studentGrades.appendText(s"$assessmentName ($lecturerName): ${grade.gradePoints}/$maxPoints $failedOrPassed (minimum $minPointsForSufficient)\n")
       htmlTableRows.append(s"<tr> <td>$assessmentName ($lecturerName)</td> <td>${grade.gradePoints}</td> <td>$maxPoints</td> <td>$passedOrFailed</td> <td>${grade.gradeDate}</td></tr>")
-
     }
 
     val htmlTableBodyEnd = "</tbody>"
@@ -266,5 +256,4 @@ class CoursewareAppController extends Initializable {
     val htmlEnd = "</html>"
     return htmlStart+htmlStyle+htmlBodyStart+htmlHeadings+htmlStudentInfo+htmlTableStart+htmlTableHead+htmlTableBodyStart+htmlTableRows+htmlTableBodyEnd+htmlTableEnd+htmlBodyEnd+htmlEnd
   }
-
 }
