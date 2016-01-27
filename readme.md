@@ -21,7 +21,9 @@ The main goals are:
 The Application starts with loading the sqlite database.
 Then you can switch between different tabs in the upper area of the app.
 
-##Lecturer Tab
+![<Screenshot Main Tab>](<./screenshots/1.png>)
+
+#Lecturer Tab
 
 Here you can enter the
 
@@ -31,6 +33,8 @@ Here you can enter the
     - Points for an Exam
 
 By clicking "Insert Grade" you can save the information in the database.
+
+![<Screenshot Lecturer Tab>](<https://www.fh-joanneum.at/custom/images/logo_1001.png>)
 
 #Student Tab
 
@@ -43,6 +47,8 @@ Here you can enter the
 
 By clicking on view you can view all grades from one specified student.
 By clicking on the "Save as HTML" you can export the grades of the selected student in an HTML file in the project root folder.
+
+![<Screenshot Student Tab>](<https://www.fh-joanneum.at/custom/images/logo_1001.png>)
 
 [FH Joanneum IMA](http://www.fh-joanneum.at/ima/?lan=en)
 
