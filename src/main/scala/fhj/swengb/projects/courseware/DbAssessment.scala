@@ -4,6 +4,7 @@ import java.sql.{Statement, ResultSet, Connection}
 
 import scala.collection.mutable.ListBuffer
 
+//implements the structure of the db.scala file
 object Assessment extends Db.DbEntity[Assessment] {
   def toDb(c: Connection)(a: Assessment) : Int = {
     val pstmt = c.prepareStatement(insertSql)

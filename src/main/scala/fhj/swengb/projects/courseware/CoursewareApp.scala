@@ -31,16 +31,18 @@ object CoursewareApp {
   }
 }
 
+//starts the gui
+
 class CoursewareApp extends javafx.application.Application {
   val Fxml = "/fhj/swengb/projects/courseware/Courseware.fxml"
-  //val Css = "/fhj/swengb/projects/courseware/Courseware.css"
+  val Css = "/fhj/swengb/projects/courseware/Courseware.css"
   val loader = new FXMLLoader(getClass.getResource(Fxml))
   override def start(stage: Stage): Unit = try {
     stage.setTitle("Courseware")
     loader.load[Parent]()
     val scene = new Scene(loader.getRoot[Parent])
     stage.setScene(scene)
-    //stage.getScene.getStylesheets.add(Css)
+    stage.getScene.getStylesheets.add(Css)
     stage.show()
 
   } catch {
@@ -51,6 +53,8 @@ class CoursewareApp extends javafx.application.Application {
 
 }
 
+//access to fxml gui elements with fxID
+
 class CoursewareAppController extends Initializable {
   @FXML var lecturerLecturernameDropdown : ChoiceBox[Lecturer] = _
   @FXML var lecturerAssessmentDropdown : ChoiceBox[Assessment] = _
@@ -60,37 +64,52 @@ class CoursewareAppController extends Initializable {
   @FXML var studentGrades : WebView = _
   @FXML var studentName : TextArea = _
   @FXML var studentNumber : TextArea = _
+
+  //when the app starts the initialize function will be called
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
     resetDatabase()
   }
 
+  //access to database
+
   def resetDatabase(): Unit = {
     // --------- initialize Lecturers
+    //recreate => drops and creates the table if table already exists
     Lecturer.reTable(Db.maybeConnection.get.createStatement())
+    //for each lecturer one insert
     for (lecturer <- Data.lecturerList) {
       Lecturer.toDb(Db.maybeConnection.get)(lecturer)
     }
+    //clears the dropdown menu to avoid duplicate entries
     lecturerLecturernameDropdown.getItems.clear()
     lecturerLecturernameDropdown.getItems.addAll(Lecturer.fromDb(Lecturer.queryAll(Db.maybeConnection.get)))
 
     // --------- initialize Assessments
+    //recreate => drops and creates the table if table already exists
     Assessment.reTable(Db.maybeConnection.get.createStatement())
+    //for each assessment one insert
     for (assessment <- Data.assessmentList) {
       Assessment.toDb(Db.maybeConnection.get)(assessment)
     }
+    //clears the dropdown menu to avoid duplicate entries
     lecturerAssessmentDropdown.getItems.clear()
     lecturerAssessmentDropdown.getItems.addAll(Assessment.fromDb(Assessment.queryAll(Db.maybeConnection.get)))
 
     // --------- initialize Students
+    //recreate => drops and creates the table if table already exists
     Student.reTable(Db.maybeConnection.get.createStatement())
+    //for each student one insert
     for (student <- Data.studentList) {
       Student.toDb(Db.maybeConnection.get)(student)
     }
+    //clears the dropdown menu to avoid duplicate entries
     lecturerStudentDropdown.getItems.clear()
     lecturerStudentDropdown.getItems.addAll(Student.fromDb(Student.queryAll(Db.maybeConnection.get)))
 
     // --------- initialize Grades
+    //recreate => drops and creates the table if table already exists
     Grade.reTable(Db.maybeConnection.get.createStatement())
+    //for each grade one insert
     for (grade <- Data.gradeList) {
       Grade.toDb(Db.maybeConnection.get)(grade)
     }
@@ -105,6 +124,7 @@ class CoursewareAppController extends Initializable {
 
   def insertGrade(): Unit = {
     try {
+      //gets the values from the gui
       val currentLecturer = lecturerLecturernameDropdown.getValue
       val currentAssessment = lecturerAssessmentDropdown.getValue
       val currentStudent = lecturerStudentDropdown.getValue
@@ -116,6 +136,7 @@ class CoursewareAppController extends Initializable {
       val currentDate = new Date().getTime
       val currentTimestamp = new Timestamp(currentDate)
       val gradeID = util.Random.nextInt
+      //inserts the data to the db
       Grade.toDb(Db.maybeConnection.get)(Grade(gradeID, currentAssessment.assessmentID, currentStudent.studentID, currentLecturer.lecturerID, currentTimestamp, currentPoints))
       val alert = new Alert(AlertType.INFORMATION)
       alert.setTitle("Successfully inserted")
@@ -142,20 +163,19 @@ class CoursewareAppController extends Initializable {
     }
   }
 
-
-
-
-
   def execView(): Unit = {
     try {
       val currentStudent = studentStudentDropdown.getValue
+      //when no student is selected
       if (currentStudent == null) throw new IllegalArgumentException()
+      //shows the data in the label
       studentName.setText(currentStudent.studentLastname + " " + currentStudent.studentFirstname)
       studentNumber.setText(currentStudent.studentMatnum)
+      //webview
       studentGrades.getEngine.loadContent("")
+      //load the html report for the actual student
       val htmlReport = createReportHtmlString(currentStudent)
       studentGrades.getEngine.loadContent(htmlReport)
-
 
     } catch {
       case e:IllegalArgumentException => {
@@ -174,6 +194,7 @@ class CoursewareAppController extends Initializable {
       val currentStudent = studentStudentDropdown.getValue
       if (currentStudent == null) throw new IllegalArgumentException()
       val html = createReportHtmlString(currentStudent)
+      //creates the html file
       val filePath = Paths.get(s"report_${currentStudent.studentLastname}_${currentStudent.studentFirstname}.html")
       Files.write(filePath, html.getBytes(StandardCharsets.UTF_8))
 
@@ -201,19 +222,19 @@ class CoursewareAppController extends Initializable {
     }
   }
 
+  //creates the html file
 
   def createReportHtmlString(student: Student) : String = {
     val htmlStart = "<!DOCTYPE html><html>"
+    //writes everything from bootstrap.min.css into the html file
     val htmlStyle = "<head><style>" + Source.fromURL(getClass.getResource("/fhj/swengb/projects/courseware/bootstrap.min.css")).mkString + "</style></head>"
     val htmlBodyStart = "<body>"
     val htmlHeadings = s"<h1>Grade report</h1><h2>${student.studentLastname} ${student.studentFirstname}</h2>"
     val htmlStudentInfo = s"<ul> <li>Last Name: ${student.studentLastname}</li> <li>First Name: ${student.studentFirstname} </li> <li>Matriculation Number: ${student.studentMatnum}</li> <li>Study programme: ${student.studentStudyprogramme}</li> </ul>"
     val htmlTableStart = "<table class=\"table table-hover table-striped\">"
-    val htmlTableHead = "<thead><tr> <th>Assessment</th> <th>Points</th> <th>Max Points</th> <th>Passed or Failed</th> <th>Date</th> </tr></thead>"
+    val htmlTableHead = "<thead><tr> <th>Assessment</th> <th>Points</th> <th>Max Points</th> <th>Passed or Failed</th> <th>Graded Date</th> </tr></thead>"
     val htmlTableBodyStart = "<tbody>"
     var htmlTableRows = new StringBuilder
-
-
     val selectGradesQuery = "select * from grade where studentID=" + student.studentID
     val selectedGrades = Grade.fromDb(Db.maybeConnection.get.createStatement().executeQuery(selectGradesQuery))
     if (selectedGrades.isEmpty) {
@@ -238,9 +259,6 @@ class CoursewareAppController extends Initializable {
       htmlTableRows.append(s"<tr> <td>$assessmentName ($lecturerName)</td> <td>${grade.gradePoints}</td> <td>$maxPoints</td> <td>$passedOrFailed</td> <td>${grade.gradeDate}</td></tr>")
 
     }
-
-
-
 
     val htmlTableBodyEnd = "</tbody>"
     val htmlTableEnd = "</table>"

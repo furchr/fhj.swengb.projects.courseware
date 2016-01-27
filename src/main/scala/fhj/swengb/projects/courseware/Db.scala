@@ -3,7 +3,7 @@ package fhj.swengb.projects.courseware
 import java.sql.{DriverManager, ResultSet, Connection, Statement}
 import scala.util.Try
 
-
+//template for the db-class structure
 // taken from https://github.com/rladstaetter/fhj.swengb.homework.dbtool/blob/master/src/main/scala/fhj/swengb/homework/dbtool/DbTool.scala
 object Db {
 
@@ -69,6 +69,8 @@ object Db {
 
   }
 
+  //connection to the sqlite db
+  //once generated as long as the gui is running
   lazy val maybeConnection: Try[Connection] =
     Try(DriverManager.getConnection("jdbc:sqlite::memory:"))
 
