@@ -21,7 +21,7 @@ The main goals are:
 The Application starts with loading the sqlite database.
 Then you can switch between different tabs in the upper area of the app.
 
-##Lecuturer Tab
+##Lecturer Tab
 
 Here you can enter the
 
@@ -47,5 +47,3 @@ By clicking on the "Save as HTML" you can export the grades of the selected stud
 [FH Joanneum IMA](http://www.fh-joanneum.at/ima/?lan=en)
 
 last modified 2016-01-27
-
-########################
